@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { UserInfo } from "$lib/api";
     import { writable } from "svelte/store";
     import { goto } from "$app/navigation";
     import { debounce } from "$lib/debounce";
@@ -16,7 +17,7 @@
     const searchResults = writable<UserInfo[]>([]);
     let searchQuery = "";
 
-    async function onSearchFieldChange(event) {
+    async function onSearchFieldChange(event: InputEvent) {
         if (searchQuery.trim() === "") {
             $searchResults = [];
         } else {
@@ -45,6 +46,10 @@
     }
 
 </style>
+
+<svelte:head>
+    <title>Vail stats far from this world</title>
+</svelte:head>
 
 <h1>Vail stats</h1>
 <p>Delivered to you from far outside this world.</p>

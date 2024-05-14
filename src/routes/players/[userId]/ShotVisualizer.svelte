@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { UserGunStats } from "$lib/api";
+    import type { UserGunStats, UserWeaponStats } from "$lib/api";
     export let stats: writable<UserGunStats | UserWeaponStats | null>;
 
     function getColorForPart(stats: UserGunStats | UserWeaponStats | null, part: string): string {
         if (stats === null || stats.shots === undefined) {
-            return "#000000";
+            return "#bebebe";
         }
         const hits = stats.shots.hits;
 

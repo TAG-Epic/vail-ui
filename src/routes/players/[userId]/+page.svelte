@@ -1,6 +1,6 @@
 <script lang="ts">
     import ShotVisualizer from "./ShotVisualizer.svelte";
-    import { goto } from "$app/navigation";
+    import type { UserGunStats, UserWeaponStats } from "$lib/api";
     import { writable } from "svelte/store";
     export let data;
     
@@ -28,6 +28,8 @@
     <select id="select-active-weapon" bind:value={$activeWeapon}>
         <option value="mk418">mk418</option>
     </select>
+    <h3>Hits</h3>
+    <ShotVisualizer stats={activeWeaponStats} />
 {:then stats}
     <h2>Weapons</h2>
     <label for="select-active-weapon">Select weapon to view stats for</label>
