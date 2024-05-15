@@ -19,7 +19,7 @@
     }
 </script>
 
-<svg height="300" width="300">
+<svg height="300" width="300" xmlns="http://www.w3.org/2000/svg">
     <circle class="head" cx="100" cy="50" r="30" fill={getColorForPart($stats, "head")} />
     <rect class="body" width="80" height="100" fill={getColorForPart($stats, "body")} x="60" y="90" />
     <rect class="arm left-arm" width="30" height="100" fill={getColorForPart($stats, "arm")} x="15" y="90" />
