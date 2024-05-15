@@ -31,7 +31,7 @@ export type UserGunStats = {
     };
     shots: {
         fired: number;
-        hit: {
+        hits: {
             leg: number;
             arm: number;
             body: number;
