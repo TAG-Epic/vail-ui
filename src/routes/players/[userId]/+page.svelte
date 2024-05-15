@@ -4,29 +4,49 @@
     import { writable } from "svelte/store";
     export let data;
     
-    const activeWeapon = writable<string>("mk418");
-    const activeWeaponStats = writable<UserGunStats | UserWeaponStats | null>(null);
+    const activeWeapon = writable<string>("total");
+    const activeWeaponStats = writable<UserGunStats | UserGunStats[] | UserWeaponStats | null>(null);
 
     activeWeapon.subscribe(async (newWeaponId) => {
         const userStats = await data.userStats;
 
-        activeWeaponStats.set(userStats.weapons[newWeaponId]);
+        if (newWeaponId === "total") {
+            const guns = Object.values(userStats.weapons).filter(weapon => weapon.shots !== undefined);
+            const virtualGun = {
+                kills: {
+                    headshot_kills: guns.reduce((accumulator, weapon) => {return accumulator + weapon.kills.headshot_kills}, 0),
+                    total: guns.reduce((accumulator, weapon) => {return accumulator + weapon.kills.total}, 0),
+                },
+                shots: {
+                    fired: guns.reduce((accumulator, weapon) => {return accumulator + weapon.shots.fired}, 0),
+                    hits: {
+                        head: guns.reduce((accumulator, weapon) => {return accumulator + weapon.shots.hits.head}, 0),
+                        body: guns.reduce((accumulator, weapon) => {return accumulator + weapon.shots.hits.body}, 0),
+                        arm: guns.reduce((accumulator, weapon) => {return accumulator + weapon.shots.hits.arm}, 0),
+                        leg: guns.reduce((accumulator, weapon) => {return accumulator + weapon.shots.hits.leg}, 0),
+                    },
+                }
+            };
+            activeWeaponStats.set(virtualGun);
+        } else {
+            activeWeaponStats.set(userStats.weapons[newWeaponId]);
+        }
+
     });
 
 </script>
+<svelte:head>
+    <title>{data.userInfo.name}'s stats</title>
+    <meta name="description" content={`View how ${data.userInfo.name} is performing in vail quick play`}>
+    <meta name="keywords" content="vail, stats, graphs">
+</svelte:head>
 
-{#await data.userInfo}
-    <h1>Loading user info</h1>
-{:then userInfo}
-    <h1>{userInfo.name}'s stats</h1>
-{:catch error}
-    <h1>Unknown users's stats</h1>
-{/await}
+<h1>{data.userInfo.name}'s stats</h1>
 {#await data.userStats}
     <h2>Weapons</h2>
     <label for="select-active-weapon">Select weapon to view stats for</label>
     <select id="select-active-weapon" bind:value={$activeWeapon}>
-        <option value="mk418">mk418</option>
+        <option value="total" default>total</option>
     </select>
     <h3>Hits</h3>
     <ShotVisualizer stats={activeWeaponStats} />
@@ -34,6 +54,7 @@
     <h2>Weapons</h2>
     <label for="select-active-weapon">Select weapon to view stats for</label>
     <select id="select-active-weapon" bind:value={$activeWeapon}>
+        <option value="total" default>total</option>
         {#each Object.keys(stats.weapons) as weaponId}
             <option value={weaponId}>{weaponId}</option>
         {/each}

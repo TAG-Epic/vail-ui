@@ -6,6 +6,7 @@
         if (stats === null || stats.shots === undefined) {
             return "#bebebe";
         }
+
         const hits = stats.shots.hits;
 
         const totalHits = Object.values(hits).reduce((accumulator, value) => {return accumulator + value}, 0);
@@ -13,7 +14,6 @@
         
         const redHitColor = 0xFF * hitRate;
         const redHitColorHex = Math.floor(redHitColor).toString(16);
-        console.log(redHitColorHex);
 
         return `#${redHitColorHex}0000`
     }

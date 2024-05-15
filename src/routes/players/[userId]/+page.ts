@@ -1,11 +1,31 @@
 import type { PageLoad } from "./$types.d.ts";
-import { getUserInfo, getUserStats } from "$lib/api";
+import { APIClient } from "$lib/api";
+import type { APIError } from "$lib/api";
+import { error } from '@sveltejs/kit';
 
 export async function load(request: PageLoad) {
     const userId = request.params.userId;
 
+    const apiClient = new APIClient(request.fetch);
+
+    const getUserInfoPromise = apiClient.getUserInfo(userId);
+    const getUserStatsPromise = apiClient.getUserStats(userId).catch(() => {});
+    
+    try {
+        const userInfo = await getUserInfoPromise;
+    } catch (errorDetails) {
+        if (errorDetails.code === undefined || errorDetails.detail === undefined) {
+            throw errorDetails;
+        }
+        if (errorDetails.code === "user_not_found") {
+            error(404, {
+                "message": "User not found"
+            });
+        }
+    }
+
     return {
-        userInfo: getUserInfo(userId),
-        userStats: getUserStats(userId)
+        userInfo: await getUserInfoPromise,
+        userStats: getUserStatsPromise
     };
 }

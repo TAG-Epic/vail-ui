@@ -1,9 +1,9 @@
 <script lang="ts">
     import type { UserInfo } from "$lib/api";
+    import { APIClient } from "$lib/api";
     import { writable } from "svelte/store";
     import { goto } from "$app/navigation";
     import { debounce } from "$lib/debounce";
-    import { searchForUsername } from "$lib/api";
     const userPlaceholders = [
         "natix",
         "Frosty",
@@ -17,11 +17,13 @@
     const searchResults = writable<UserInfo[]>([]);
     let searchQuery = "";
 
+    const apiClient = new APIClient(fetch);
+
     async function onSearchFieldChange(event: InputEvent) {
         if (searchQuery.trim() === "") {
             $searchResults = [];
         } else {
-            $searchResults = await searchForUsername(searchQuery);
+            $searchResults = await apiClient.searchForUserByName(searchQuery);
         }
     }
 </script>
@@ -49,6 +51,9 @@
 
 <svelte:head>
     <title>Vail stats far from this world</title>
+    <meta name="description" content="View official vail stats for any vail user">
+    <meta name="keywords" content="vail, stats, graphs">
+    <meta name="og:color" content="#00FF00">
 </svelte:head>
 
 <h1>Vail stats</h1>

@@ -1,11 +1,9 @@
 const BASE_URI = "https://vail-scraper.farfrom.world/api/v2";
 
-class APIError {
-    constructor(data) {
-        this.code = data.code;
-        this.detail = data.detail;
-    }
-}
+export type APIError = {
+    code: string;
+    detail: string;
+};
 
 export type UserInfo = {
     id: string;
@@ -46,32 +44,44 @@ export type UserStats = {
     weapons: Record<string, UserWeaponStats | UserGunStats>
 };
 
-export async function searchForUsername(query: string): Promise<UserInfo[]> {
-    const response = await fetch(`${BASE_URI}/users/search?name=${encodeURIComponent(query)}`);
-    if (response.status !== 200) {
-        const data = await response.json();
-        throw new APIError(data);
+type FetchMethod = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+
+export class APIClient {
+    #fetch: FetchMethod;
+    constructor(fetch: FetchMethod | null) {
+        if (fetch !== null) {
+            this.#fetch = fetch;
+        } else {
+            this.#fetch = window.fetch;
+        }
     }
+    async searchForUserByName(query: string): Promise<UserInfo[]> {
+        const response = await this.#fetch(`${BASE_URI}/users/search?name=${encodeURIComponent(query)}`);
+        if (response.status !== 200) {
+            const data = await response.json();
+            throw data;
+        }
 
-    return (await response.json()).items;
-
-}
-export async function getUserInfo(userId: string): Promise<UserInfo> {
-    const response = await fetch(`${BASE_URI}/users/${encodeURIComponent(userId)}`);
-    if (response.status !== 200) {
-        const data = await response.json();
-        throw new APIError(data);
+        return (await response.json()).items;
     }
+    async getUserInfo(userId: string): Promise<UserInfo> {
+        const response = await this.#fetch(`${BASE_URI}/users/${encodeURIComponent(userId)}`);
+        if (response.status !== 200) {
+            const data = await response.json();
+            throw data;
+        }
 
-    return await response.json();
-}
-export async function getUserStats(userId: string): Promise<UserStats> {
-    const response = await fetch(`${BASE_URI}/users/${encodeURIComponent(userId)}/stats`);
-    if (response.status !== 200) {
-        const data = await response.json();
-        throw new APIError(data);
+        return await response.json();
     }
+    async getUserStats(userId: string): Promise<UserStats> {
+        const response = await this.#fetch(`${BASE_URI}/users/${encodeURIComponent(userId)}/stats`);
+        if (response.status !== 200) {
+            const data = await response.json();
+            throw data;
+        }
 
-    return await response.json();
+        return await response.json();
 
+    }
 }
+
