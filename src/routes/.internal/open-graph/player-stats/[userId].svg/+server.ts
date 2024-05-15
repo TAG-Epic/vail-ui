@@ -20,7 +20,7 @@ export async function GET(request: PageLoad) {
         
         return new Response(html, {
             headers: {
-                "Content-Type": "application/svg"
+                "Content-Type": "image/svg"
             }
         });
     } catch (errorDetails) {
