@@ -52,8 +52,6 @@
 <svelte:head>
     <title>Vail stats far from this world</title>
     <meta name="description" content="View official vail stats for any vail user">
-    <meta name="keywords" content="vail, stats, graphs">
-    <meta name="og:color" content="#00FF00">
 </svelte:head>
 
 <h1>Vail stats</h1>

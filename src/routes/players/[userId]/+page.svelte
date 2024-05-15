@@ -38,7 +38,6 @@
 <svelte:head>
     <title>{data.userInfo.name}'s stats</title>
     <meta name="description" content={`View how ${data.userInfo.name} is performing in vail quick play`}>
-    <meta name="keywords" content="vail, stats, graphs">
 </svelte:head>
 
 <h1>{data.userInfo.name}'s stats</h1>
