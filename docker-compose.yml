@@ -1,0 +1,7 @@
+services:
+  vail-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 10004:8000
