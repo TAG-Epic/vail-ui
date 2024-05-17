@@ -28,37 +28,20 @@
 <meta name="description" content="View official vail stats for any vail user">
 <link rel="stylesheet" href="global.css">
 
-<div class="container">
-    <!-- Use the global CSS font for the title -->
-    <h1 class="global-font">Vail stats</h1>
-    <p class="orbitron-font">Delivered to you from far outside this world.</p>
+<h1>Vail stats</h1>
+<p>Delivered to you from far outside this world.</p>
 
-    <h1 class="orbitron-font">Search for user</h1>
-    <form on:submit|preventDefault={() => {}}>
-        <label for="username-field">Username</label>
-        <input id="username-field" type="search" placeholder={userPlaceholder} on:input={debounce(onSearchFieldChange)} bind:value={searchQuery}>
-    </form>
+<h1>Search for user</h1>
+<form on:submit|preventDefault={() => {}}>
+    <label for="username-field">Username</label>
+    <br/>
+    <input id="username-field" type="search" placeholder={userPlaceholder} on:input={debounce(onSearchFieldChange)} bind:value={searchQuery}>
+</form>
 
-    <div class="users">
-        {#each $searchResults as user}
-            <button class="user" on:click={() => {goto(`/players/${user.id}`)}}>
-                {user.name}
-            </button>
-        {/each}
-    </div>
+<div class="users">
+    {#each $searchResults as user}
+        <button class="user" on:click={() => {goto(`/players/${user.id}`)}}>
+            {user.name}
+        </button>
+    {/each}
 </div>
-
-<style>
-    /* Define font styles */
-    .global-font {
-        /* Use the font specified in global.css */
-        font-family: 'Ailerons', sans-serif;
-        /* Add any other styles if needed */
-    }
-
-    .orbitron-font {
-        /* Use the Orbitron font */
-        font-family: 'Orbitron', sans-serif;
-        /* Add any other styles if needed */
-    }
-</style>
