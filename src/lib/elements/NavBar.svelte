@@ -13,6 +13,7 @@
         border-radius: 8px;
     }
     nav > a {
+        font-family: 'Orbitron', sans-serif; /* Apply Orbitron font */
         color: #ffffff;
         font-weight: 700;
         font-size: 1.5rem;
