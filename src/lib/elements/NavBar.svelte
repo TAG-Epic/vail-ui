@@ -4,16 +4,29 @@
 
 <style>
     nav {
-        background: #000;
-        padding: 1rem;
+        background: linear-gradient(45deg, #1a1a1a, #333);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
     }
     nav > a {
-        color: #FFF;
-        font-weight: 600;
-        font-size: 2rem;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.5rem;
         text-decoration: none;
+        padding: 0.5rem 1rem;
+        transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+        border-radius: 4px;
     }
     nav > a:hover {
-        color: #AAA;
+        color: #fff;
+        background-color: #555;
+        transform: scale(1.1);
+    }
+    nav > a:active {
+        transform: scale(1.05);
     }
 </style>
