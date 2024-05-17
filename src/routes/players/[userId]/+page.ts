@@ -13,19 +13,22 @@ export async function load(request: PageLoad) {
     
     try {
         const userInfo = await getUserInfoPromise;
+
+        return {
+            userInfo,
+            userStats: getUserStatsPromise
+        };
     } catch (errorDetails) {
-        if (errorDetails.code === undefined || errorDetails.detail === undefined) {
-            throw errorDetails;
-        }
-        if (errorDetails.code === "user_not_found") {
-            error(404, {
-                "message": "User not found"
-            });
+        if (errorDetails.code !== undefined || errorDetails.detail !== undefined) {
+            if (errorDetails.code === "user_not_found") {
+                error(404, {
+                    "message": "User not found"
+                });
+            }
+        } else {
+            console.error(`failed to get user info for ${userId}: ${errorDetails}`);
+            error(500, {message: "Failed to fetch user info"});
         }
     }
 
-    return {
-        userInfo: await getUserInfoPromise,
-        userStats: getUserStatsPromise
-    };
 }

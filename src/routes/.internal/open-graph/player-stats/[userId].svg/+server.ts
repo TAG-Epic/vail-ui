@@ -24,15 +24,14 @@ export async function GET(request: PageLoad) {
             }
         });
     } catch (errorDetails) {
-        if (errorDetails.code === undefined || errorDetails.detail === undefined) {
-            throw errorDetails;
+        if (errorDetails.code !== undefined && errorDetails.detail !== undefined) {
+            if (errorDetails.code === "user_not_found") {
+                return error(404, {
+                    "message": "User not found"
+                });
+            }
         }
-        if (errorDetails.code === "user_not_found") {
-            return error(404, {
-                "message": "User not found"
-            });
-        }
-        throw errorDetails;
+        console.error(`failed to get hit svg for ${userId} trying to make virtual gun: ${errorDetails}`);
+        error(500, {message: "Failed to fetch user info"});
     }
-    
 }
