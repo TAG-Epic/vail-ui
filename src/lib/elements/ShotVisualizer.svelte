@@ -38,7 +38,7 @@
         const hitRate = hitRates[part];
 
         const redHitColor = 0xFF * hitRate;
-        const redHitColorHex = Math.floor(redHitColor).toString(16);
+        const redHitColorHex = Math.floor(redHitColor).toString(16).padStart(2, "0");
 
         return `#${redHitColorHex}0000`
     }
