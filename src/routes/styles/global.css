@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Ailerons';
-    src: url('/src/fonts/Ailerons-Typeface.otf') format('opentype');
+    font-family: 'Orbitron';
+    src: url('/src/fonts/Orbitron-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
@@ -9,7 +9,7 @@ body {
     background: radial-gradient(circle at 20% 20%, #1a1a1a, #000 70%), 
                 radial-gradient(circle at 80% 80%, #1a1a1a, #000 70%);
     background-size: cover;
-    font-family: 'Ailerons', sans-serif;
+    font-family: 'Orbitron', sans-serif; /* Use Orbitron as the global font */
     color: #ffffff; /* White text color */
     margin: 0;
     padding: 0;
@@ -59,7 +59,7 @@ label {
     width: 300px;
     border: 2px solid #ffffff; /* White border color */
     border-radius: 4px;
-    font-family: 'Ailerons', sans-serif;
+    font-family: 'Orbitron', sans-serif; /* Use Orbitron for username field */
     font-weight: 300; /* Thinner text */
     color: #ffffff; /* White text color */
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
