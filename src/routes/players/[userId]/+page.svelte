@@ -1,4 +1,3 @@
-<!-- Shot CSS file-->
 <script lang="ts">
     import ShotVisualizer from "$lib/elements/ShotVisualizer.svelte";
     import type { UserGunStats, UserWeaponStats } from "$lib/api";
