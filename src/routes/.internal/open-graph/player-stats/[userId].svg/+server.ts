@@ -12,25 +12,21 @@ export async function GET(request: PageLoad) {
     const apiClient = new APIClient(request.fetch);
     
     try {
-        // Fetch user stats from the API
         const userStats = await apiClient.getUserStats(userId);
-        
-        // Filter out guns without shot data and create a combination virtual gun
         const guns = Object.values(userStats.weapons).filter(weapon => weapon.shots !== undefined);
         const gun = createCombinationVirtualGun(guns);
         const gunStore = writable<UserGunStats>(gun);
+        const { html } = ShotVisualizer.render({svg: true, stats: gunStore});
         
-        // Render ShotVisualizer Svelte component with SVG output
-        const { html } = ShotVisualizer.render({ svg: true, stats: gunStore });
-        
-        // Return SVG response
         return new Response(html, {
             headers: {
-                "Content-Type": "image/svg+xml" // Set content type to SVG
+                "Content-Type": "image/svg"
             }
         });
     } catch (errorDetails) {
-        // Handle errors
+        if (errorDetails.code === undefined || errorDetails.detail === undefined) {
+            throw errorDetails;
+        }
         if (errorDetails.code === "user_not_found") {
             return error(404, {
                 "message": "User not found"
@@ -38,4 +34,5 @@ export async function GET(request: PageLoad) {
         }
         throw errorDetails;
     }
+    
 }

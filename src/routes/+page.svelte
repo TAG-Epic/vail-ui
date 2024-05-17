@@ -1,4 +1,3 @@
-<!-- Main CSS file-->
 <script lang="ts">
     import type { UserInfo } from "$lib/api";
     import { APIClient } from "$lib/api";
@@ -17,7 +16,7 @@
 
     async function onSearchFieldChange(event: InputEvent) {
         if (searchQuery.trim() === "") {
-            searchResults.set([]);
+            $searchResults = [];
         } else {
             searchResults.set(await apiClient.searchForUserByName(searchQuery));
         }
@@ -25,16 +24,21 @@
 </script>
 
 <svelte:head>
-    <title>Vail stats far from this world</title>
+    <title>VAIL stats far from this world</title>
     <meta name="description" content="View official vail stats for any vail user">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        @font-face {
+            font-family: 'Ailerons';
+            src: url('/src/fonts/Ailerons-Typeface.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+        }
 
         body {
             background: radial-gradient(circle at 20% 20%, #1a1a1a, #000 70%), 
                         radial-gradient(circle at 80% 80%, #1a1a1a, #000 70%);
             background-size: cover;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Ailerons', sans-serif;
             color: #ffffff; /* White text color */
             margin: 0;
             padding: 0;
@@ -49,14 +53,16 @@
         }
 
         h1 {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 3.5rem; /* Slightly bigger text */
+            font-weight: 400; /* Thinner text */
             margin-bottom: 1rem;
             text-align: center;
             color: #ffffff; /* White header text color */
         }
 
         p {
+            font-size: 1.2rem; /* Slightly bigger text */
+            font-weight: 300; /* Thinner text */
             text-align: center;
             margin-bottom: 2rem;
             color: #ffffff; /* White paragraph text color */
@@ -70,18 +76,20 @@
         }
 
         label {
-            font-size: 1.5rem;
+            font-size: 1.6rem; /* Slightly bigger text */
+            font-weight: 300; /* Thinner text */
             margin-bottom: 0.5rem;
             color: #ffffff; /* White label text color */
         }
 
         #username-field {
             padding: 0.5rem;
-            font-size: 1rem;
+            font-size: 1.2rem; /* Slightly bigger text */
             width: 300px;
             border: 2px solid #ffffff; /* White border color */
             border-radius: 4px;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Ailerons', sans-serif;
+            font-weight: 300; /* Thinner text */
             color: #ffffff; /* White text color */
             background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
         }
