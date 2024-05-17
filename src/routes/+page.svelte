@@ -61,4 +61,19 @@
         font-family: 'Orbitron', sans-serif;
         /* Add any other styles if needed */
     }
+        /* Style for the footer */
+    .footer {
+        background-color: #333; /* Dark background color */
+        color: #fff; /* White text color */
+        text-align: center; /* Center align text */
+        padding: 10px 0; /* Add padding */
+        position: fixed; /* Fixed position at the bottom */
+        width: 100%; /* Full width */
+        bottom: 0; /* Stick to the bottom */
+    }
+
+    .footer-text {
+        margin: 0; /* Remove default margin */
+        font-size: 14px; /* Adjust font size */
+    }
 </style>
