@@ -24,7 +24,7 @@
     }
 </script>
 
-<title>VAIL stats far from this world</title>
+<title>VAIL Stats Web UI</title>
 <meta name="description" content="View official vail stats for any vail user">
 <link rel="stylesheet" href="global.css">
 
