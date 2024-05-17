@@ -42,8 +42,6 @@
 
     return `#${colorHex}0000`; // Darker color to darkish red gradient
 }
-
-
     let shotHitRates = getHitRates($stats);
     $: shotHitRates = getHitRates($stats);
 </script>
