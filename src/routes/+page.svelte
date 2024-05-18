@@ -4,6 +4,7 @@
     import { writable } from "svelte/store";
     import { goto } from "$app/navigation";
     import { debounce } from "$lib/debounce";
+    import './styles/global.css';
     const userPlaceholders = [
         "natix",
         "Frosty",
