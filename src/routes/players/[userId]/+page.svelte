@@ -24,7 +24,7 @@
 </script>
 <svelte:head>
     <title>{data.userInfo.name}'s stats</title>
-    <meta name="description" content={`View how ${data.userInfo.name} is performing in vail quick play`}>
+    <meta name="description" content={`View how ${data.userInfo.name} is performing in VAIL VR quick play`}>
     <meta name="og:image" content={`/.internal/open-graph/player-stats/${data.userInfo.id}.png`}>
 </svelte:head>
 

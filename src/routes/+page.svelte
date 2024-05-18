@@ -101,7 +101,7 @@
 
 <svelte:head>
     <title>Vail stats far from this world</title>
-    <meta name="description" content="View official vail stats for any vail user">
+    <meta name="description" content="View official VAIL VR stats for any VAIL user">
 </svelte:head>
 
 <div>
