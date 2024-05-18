@@ -1,0 +1,18 @@
+@font-face {
+    font-family: "Orbitron";
+    src: url("/src/lib/fonts/Orbitron.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Ailerons";
+    src: url("/src/lib/fonts/Ailerons.otf") format("opentype");
+}
+
+body {
+    background: radial-gradient(circle at 20% 20%, #1a1a1a, #000 70%), 
+                radial-gradient(circle at 80% 80%, #1a1a1a, #000 70%);
+    height: 100vh;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-size: cover;
+}

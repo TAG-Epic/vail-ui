@@ -4,8 +4,8 @@
 
 <style>
     nav {
-        background: #000;
         padding: 1rem;
+        background: linear-gradient(45deg, #1a1a1a, #333);
     }
     nav > a {
         color: #FFF;
