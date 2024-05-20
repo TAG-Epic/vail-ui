@@ -83,5 +83,16 @@ export class APIClient {
         return await response.json();
 
     }
+
+    async getUserCount(): Promise<number> {
+        const response = await this.#fetch(`${BASE_URI}/game/user-count`);
+        if (response.status !== 200) {
+            const data = await response.json();
+            throw data;
+        }
+
+        return (await response.json()).count;
+        
+    }
 }
 

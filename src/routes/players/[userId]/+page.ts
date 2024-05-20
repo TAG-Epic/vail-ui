@@ -1,9 +1,8 @@
-import type { PageLoad } from "./$types.d.ts";
 import { APIClient } from "$lib/api";
 import type { APIError } from "$lib/api";
 import { error } from '@sveltejs/kit';
 
-export async function load(request: PageLoad) {
+export async function load(request) {
     const userId = request.params.userId;
 
     const apiClient = new APIClient(request.fetch);

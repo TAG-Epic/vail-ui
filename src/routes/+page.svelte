@@ -4,6 +4,9 @@
     import { writable } from "svelte/store";
     import { goto } from "$app/navigation";
     import { debounce } from "$lib/debounce";
+    
+    export let data;
+
     const userPlaceholders = [
         "natix",
         "Frosty",
@@ -109,7 +112,13 @@
         <div class="main-content">
             <div class="title">
                 <h1 class="main-title">Vail stat tracker</h1>
-                <p class="main-sub-title">Delivered to you from far outside this world.</p>
+                {#await data.userCount}
+                    <p class="main-sub-title">Tracking the stats of 50000+ vail users</p>
+                {:then userCount}
+                    <p class="main-sub-title">Tracking the stats of {userCount} vail users</p>
+                {:catch}
+                    <p class="main-sub-title">Tracking the stats of 50000+ vail users</p>
+                {/await}
             </div>
             
             <div class="user-search">
