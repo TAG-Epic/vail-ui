@@ -1,5 +1,6 @@
 <script lang="ts">
     import ShotVisualizer from "$lib/elements/ShotVisualizer.svelte";
+    import ProgressionSkins from "./ProgressionSkins.svelte";
     import type { UserGunStats, UserWeaponStats } from "$lib/api";
     import { writable } from "svelte/store";
     import { createCombinationVirtualGun } from "$lib/virtual_gun";
@@ -66,6 +67,17 @@
             <ShotVisualizer stats={activeWeaponStats} />
         {:catch error}
             <h1>Weapons</h1>
+            <p>Seems like the stats API is having some trouble. Maybe check back later?</p>
+            <p>Error code: {error.code}</p>
+            <p>Details: {error.details}</p>
+        {/await}
+    </section>
+    <section class="progression-skins-section">
+        <h2>Skins</h2>
+        <h3>Progression skins</h3>
+        {#await data.userStats then stats}
+            <ProgressionSkins stats={stats} />
+        {:catch error}
             <p>Seems like the stats API is having some trouble. Maybe check back later?</p>
             <p>Error code: {error.code}</p>
             <p>Details: {error.details}</p>
