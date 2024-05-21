@@ -81,6 +81,7 @@
     }
     .weapons {
         display: flex;
+        flex-wrap: wrap;
         gap: .5rem;
         width: 100%;
         overflow: scroll;
