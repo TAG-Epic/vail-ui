@@ -12,6 +12,10 @@
 
     activeWeapon.subscribe(async (newWeaponId) => {
         const userStats = await data.userStats;
+        
+        if (userStats === undefined) {
+            return;
+        }
 
         if (newWeaponId === "total") {
             const guns = Object.values(userStats.weapons).filter(weapon => weapon.shots !== undefined);
