@@ -1,5 +1,5 @@
 let BASE_URI = "https://vail-scraper.farfrom.world/api/v3";
-BASE_URI = "http://localhost:8000/api/v3";
+//BASE_URI = "http://localhost:8000/api/v3";
 
 export type APIError = {
     code: string;
