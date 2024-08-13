@@ -7,6 +7,11 @@
     font-family: "Ailerons";
     src: url("/src/lib/fonts/Ailerons.otf") format("opentype");
 }
+@font-face {
+    font-family: "Roboto";
+    src: url("/src/lib/fonts/Roboto-Light.tff") format("truetype");
+    font-weight: 100;
+}
 
 body {
     background: radial-gradient(circle at 20% 20%, #1a1a1a, #000 70%), 

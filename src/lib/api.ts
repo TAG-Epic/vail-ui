@@ -1,4 +1,5 @@
-const BASE_URI = "https://vail-scraper.farfrom.world/api/v2";
+let BASE_URI = "https://vail-scraper.farfrom.world/api/v3";
+BASE_URI = "http://localhost:8000/api/v3";
 
 export type APIError = {
     code: string;
@@ -18,12 +19,6 @@ export type UserMapStats = {
         abandons: number;
     }
 };
-export type UserWeaponStats = {
-    kills: {
-        total: number;
-        headshot_kills: number;
-    };
-};
 export type UserGunStats = {
     kills: {
         total: number;
@@ -39,9 +34,20 @@ export type UserGunStats = {
         };
     };
 };
+export type UserMeleeStats = {
+    kills: {
+        total: number;
+        headshot_kills: number;
+    };
+};
+export type UserWeaponStats = {
+    primary: Record<string, UserGunStats>,
+    sidearm: Record<string, UserGunStats>,
+    melee: Record<string, UserMeleeStats>
+};
 export type UserStats = {
     maps: Record<string, UserMapStats>;
-    weapons: Record<string, UserWeaponStats | UserGunStats>
+    weapons: UserWeaponStats
 };
 
 type FetchMethod = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
@@ -56,7 +62,9 @@ export class APIClient {
         }
     }
     async searchForUserByName(query: string): Promise<UserInfo[]> {
-        const response = await this.#fetch(`${BASE_URI}/users/search?name=${encodeURIComponent(query)}`);
+        const response = await this.#fetch(`${BASE_URI}/users/search?name=${encodeURIComponent(query)}`, {
+            method: "POST"
+        });
         if (response.status !== 200) {
             const data = await response.json();
             throw data;
@@ -65,7 +73,7 @@ export class APIClient {
         return (await response.json()).items;
     }
     async getUserInfo(userId: string): Promise<UserInfo> {
-        const response = await this.#fetch(`${BASE_URI}/users/${encodeURIComponent(userId)}`);
+        const response = await this.#fetch(`${BASE_URI}/users/${encodeURIComponent(userId)}/info`);
         if (response.status !== 200) {
             const data = await response.json();
             throw data;

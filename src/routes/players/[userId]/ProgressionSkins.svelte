@@ -110,8 +110,9 @@
 
 <div class="weapons-container">
     <div class="weapons">
-        {#each Object.keys(stats.weapons) as weaponName}
-            {@const weapon = stats.weapons[weaponName]}
+        {#each Object.keys(stats.weapons.primary) as weaponName}
+            {@debug weaponName}
+            {@const weapon = stats.weapons.primary[weaponName]}
             {@const progressionRequirements = weaponRequirements[weaponName]}
             {@const progressionSteps = Object.keys(progressionRequirements)}
             <div class="weapon">

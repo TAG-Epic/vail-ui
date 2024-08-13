@@ -132,7 +132,7 @@
                 <div class="users">
                     {#each $searchResults as user}
                         <a class="user" href={`/players/${user.id}`}>
-                            {user.name}
+                            {user.display_name}
                         </a>
                     {/each}
                 </div>
