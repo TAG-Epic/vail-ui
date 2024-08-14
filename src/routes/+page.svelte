@@ -11,7 +11,11 @@
         "natix",
         "Frosty",
         "Pan",
-        "Sandie"
+        "Sandie",
+        "flyingdutchman.coc",
+        "Prodigies",
+        "RICHDGEB",
+        "n0ch"
     ];
 
     const hoursSinceEpoch = Math.floor((new Date()).getTime() / 1000 / 60 / 60);
@@ -41,25 +45,16 @@
         flex-direction: column;
         gap: 1rem;
     }
-    .main-title {
-        font-family: "Ailerons";
-        font-weight: 1000;
-        font-size: 5rem;
-        color: #fff;
-    }
     .main-sub-title {
         font-family: "Orbitron";
         color: #fff;
-        font-size: 1.5rem;
+        font-size: 1.1rem;
 
     }
     .search-user-title {
         font-family: "Ailerons";
         color: #fff;
-        font-size: 3rem;
-    }
-    .user-search {
-        width: 80%;
+        font-size: 2.5rem;
     }
     label[for="username-field"] {
         display: inline-block;
@@ -103,15 +98,14 @@
 </style>
 
 <svelte:head>
-    <title>Vail stats far from this world</title>
-    <meta name="description" content="View official VAIL VR stats for any VAIL user">
+    <title>VAIL Tracker</title>
+    <meta name="description" content="Track the official stats of all VAIL users in real-time">
 </svelte:head>
 
 <div>
     <div class="main-content-placer">
         <div class="main-content">
             <div class="title">
-                <h1 class="main-title">Vail stat tracker</h1>
                 {#await data.userCount}
                     <p class="main-sub-title">Tracking the stats of 50000+ vail users</p>
                 {:then userCount}

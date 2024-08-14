@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { LEVEL_PROGRESSION } from "$lib/data/xp_progression";
     export let data;
 </script>
 <style>
@@ -85,7 +86,7 @@
             <h1 class="username">{data.userInfo.display_name}</h1>
             <a class="level-progress" href={`/players/${data.userInfo.id}/progression`}>
                 <span>0</span>
-                <progress max={100} value={50} />
+                <progress max={1} value={data.userStats.progression.xp / LEVEL_PROGRESSION[LEVEL_PROGRESSION.length - 1]} />
                 <span>50</span>
             </a>
         </div>
@@ -98,10 +99,10 @@
                 <a class="weapons-link link-button" href={`/players/${data.userInfo.id}/weapons/primary/${gunId}`}>{gunId}</a>
             {/each}
         </div>
-        <h3>Sidearms</h3>
+        <h3>Secondary</h3>
         <div class="weapons-container button-link-container">
-            {#each Object.keys(data.userStats.weapons.sidearm) as gunId}
-                <a class="weapons-link link-button" href={`/players/${data.userInfo.id}/weapons/sidearm/${gunId}`}>{gunId}</a>
+            {#each Object.keys(data.userStats.weapons.secondary) as gunId}
+                <a class="weapons-link link-button" href={`/players/${data.userInfo.id}/weapons/secondary/${gunId}`}>{gunId}</a>
             {/each}
         </div>
         <h3>Utility</h3>

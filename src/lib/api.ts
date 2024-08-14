@@ -1,5 +1,5 @@
 let BASE_URI = "https://vail-scraper.farfrom.world/api/v3";
-//BASE_URI = "http://localhost:8000/api/v3";
+// BASE_URI = "http://localhost:8000/api/v3";
 
 export type APIError = {
     code: string;
@@ -8,7 +8,7 @@ export type APIError = {
 
 export type UserInfo = {
     id: string;
-    name: string;
+    display_name: string;
 }
 
 export type UserMapStats = {
@@ -22,10 +22,10 @@ export type UserMapStats = {
 export type UserGunStats = {
     kills: {
         total: number;
-        headshot_kills: number;
+        headshots: number;
     };
     shots: {
-        fired: number;
+        total: number;
         hits: {
             leg: number;
             arm: number;
@@ -40,10 +40,16 @@ export type UserMeleeStats = {
         headshot_kills: number;
     };
 };
+export type UserUtilityStats = {
+    kills: {
+        total: number;
+    };
+};
 export type UserWeaponStats = {
     primary: Record<string, UserGunStats>,
-    sidearm: Record<string, UserGunStats>,
-    melee: Record<string, UserMeleeStats>
+    secondary: Record<string, UserGunStats>,
+    melee: Record<string, UserMeleeStats>;
+    utility: Record<string, UserUtilityStats>;
 };
 export type UserStats = {
     maps: Record<string, UserMapStats>;
