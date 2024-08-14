@@ -120,4 +120,12 @@
             {/each}
         </div>
     </section>
+    <section class="gamemodes-section">
+        <h2>Gamemodes</h2>
+        <div class="gamemodes-container button-link-container">
+            {#each Object.keys(data.userStats.gamemodes) as gamemodeId}
+                <a class="gamemode-link link-button" href={`/players/${data.userInfo.id}/gamemodes/${gamemodeId}`}>{gamemodeId.replaceAll("_", " ")}</a>
+            {/each}
+        </div>
+    </section>
 </main>
