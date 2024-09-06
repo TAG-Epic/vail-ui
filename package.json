@@ -38,6 +38,7 @@
 	"type": "module",
 	"dependencies": {
 		"@resvg/resvg-js": "^2.6.2",
-		"@sveltejs/adapter-node": "^5.0.1"
+		"@sveltejs/adapter-node": "^5.0.1",
+		"svelte-persisted-store": "^0.11.0"
 	}
 }

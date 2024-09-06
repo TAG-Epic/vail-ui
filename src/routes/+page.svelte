@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { UserInfo } from "$lib/api";
-    import { APIClient } from "$lib/api";
+    import type { UserInfo } from "$lib/api/types";
+    import { searchForUserByName } from "$lib/api";
     import { writable } from "svelte/store";
     import { goto } from "$app/navigation";
     import { debounce } from "$lib/debounce";
@@ -24,13 +24,11 @@
     const searchResults = writable<UserInfo[]>([]);
     let searchQuery = "";
 
-    const apiClient = new APIClient(fetch);
-
     async function onSearchFieldChange(event: InputEvent) {
         if (searchQuery.trim() === "") {
             $searchResults = [];
         } else {
-            $searchResults = await apiClient.searchForUserByName(searchQuery);
+            $searchResults = await searchForUserByName(searchQuery);
         }
     }
 </script>

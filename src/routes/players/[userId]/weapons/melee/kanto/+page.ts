@@ -5,16 +5,13 @@ import { APIError } from "$lib/api/errors";
 export async function load(request) {
     const userId = request.params.userId;
 
+    const getUserStatsPromise = getUserStats(userId);
+    
     try {
-        const userStats = await getUserStats(userId);
-        let gamemodeStats = userStats.gamemodes.one_in_the_chamber;
-
-        if (gamemodeStats === undefined) {
-            error(404, {message: "gamemode not found"});
-        }
-
+        const userStats = await getUserStatsPromise;
+        let meleeStats = userStats.weapons.melee;
         return {
-            gamemodeStats,
+            meleeStats,
         };
     } catch (fetchError) {
         if (fetchError instanceof APIError) {
@@ -22,7 +19,7 @@ export async function load(request) {
                 error(404, {message: "User not found"});
             }
         }
-        console.error({message: `failed to get user info for ${userId}}`, error: fetchError});
+        console.error({message: `failed to get user info for ${userId}`, error: fetchError});
         error(500, {message: "Failed to fetch user info"});
     }
 

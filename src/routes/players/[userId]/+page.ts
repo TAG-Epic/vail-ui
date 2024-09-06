@@ -1,15 +1,15 @@
-import { APIClient } from "$lib/api";
+import { getUserInfo, getUserStats } from "$lib/api";
 import { error } from '@sveltejs/kit';
+import { APIError } from "$lib/api/errors";
 
 export async function load(request) {
     const userId = request.params.userId;
 
-    const apiClient = new APIClient(request.fetch);
-
-    const getUserInfoPromise = apiClient.getUserInfo(userId);
-    const getUserStatsPromise = apiClient.getUserStats(userId);
+    const getUserInfoPromise = getUserInfo(userId);
+    const getUserStatsPromise = getUserStats(userId);
     
     try {
+        await Promise.allSettled([getUserInfoPromise, getUserStatsPromise]);
         const userInfo = await getUserInfoPromise;
         const userStats = await getUserStatsPromise;
 
@@ -17,13 +17,14 @@ export async function load(request) {
             userInfo,
             userStats
         };
-    } catch (errorDetails) {
-        if (errorDetails.code === "field_validation_error" && errorDetails.details.field === "path.user_id" && errorDetails.details.error.code === "entity_not_found") {
-            error(404, {message: "User not found"});
-        } else {
-            console.error({message: `failed to get user info for ${userId}}`, error: errorDetails});
-            error(500, {message: "Failed to fetch user info"});
+    } catch (fetchError) {
+        if (fetchError instanceof APIError) {
+            if (fetchError.data.code === "field_validation_error" && fetchError.data.details.field === "path.user_id" && fetchError.data.details.error.code === "entity_not_found") {
+                error(404, {message: "User not found"});
+            }
         }
+        console.error({message: `failed to get user info for ${userId}`, error: fetchError});
+        error(500, {message: "Failed to fetch user info"});
     }
 
 }

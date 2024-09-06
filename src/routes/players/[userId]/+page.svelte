@@ -78,12 +78,15 @@
         border-radius: 5px;
         color: #000;
     }
+    .hidden-link {
+        text-decoration: none;
+    }
 </style>
 <main>
     <section class="header-section">
         <img class="avatar" src={data.userInfo.avatar_url} alt="" />
         <div class="username-and-level">
-            <h1 class="username">{data.userInfo.display_name}</h1>
+            <h1 class="username">{data.userInfo.display_name} <a class="hidden-link" href={`/players/${data.userInfo.id}/cards`}>✨</a></h1>
             <a class="level-progress" href={`/players/${data.userInfo.id}/progression`}>
                 <span>0</span>
                 <progress max={1} value={data.userStats.progression.xp / LEVEL_PROGRESSION[LEVEL_PROGRESSION.length - 1]} />
@@ -110,6 +113,10 @@
             {#each Object.keys(data.userStats.weapons.utility) as utilityId}
                 <a class="weapons-link link-button" href={`/players/${data.userInfo.id}/weapons/utility/${utilityId}`}>{utilityId}</a>
             {/each}
+        </div>
+        <h3>Melee</h3>
+        <div class="weapons-container button-link-container">
+            <a class="weapons-link link-button" href={`/players/${data.userInfo.id}/weapons/melee/kanto`}>Kanto</a>
         </div>
     </section>
     <section class="maps-section">
