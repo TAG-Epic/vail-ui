@@ -53,6 +53,7 @@
         wipCards.push(generateHeadshotGunCard(userStats));
         wipCards.push(generatePlaytimeCard(userStats));
         wipCards.push(generateKillsPerHourCard(userStats));
+        wipCards.push(generateLegHitsCard(userStats));
 
         return wipCards 
             .map(value => ({ value, sort: Math.random() }))
@@ -78,7 +79,7 @@
                 background: "#1b2839",
                 darkBackground: true,
                 title: "😤",
-                description: "well hello there fellow steam user. Rare to see a fellow steam user in the wild nowadays."
+                description: "Well hello there fellow steam user. Rare to see a fellow steam user in the wild nowadays."
             };
         } else if (userInfo.avatar_url.includes("https://scontent.oculuscdn.com")) {
             return {
@@ -154,6 +155,22 @@
             description: `You average ${Math.floor(killsPerHour)} kills/hour.\nYour best gamemode is ${bestGamemode.name.replace("_", " ")} with an average of ${Math.floor(bestGamemode.kills_per_hour)} kills/hour`
         };
     }
+    function generateLegHitsCard(userStats: UserStats) {
+        let timesHitLeg = 0;
+        for (let gunStats of Object.values(userStats.weapons.primary)) {
+            timesHitLeg += gunStats.shots.hits.leg;
+        }
+        for (let gunStats of Object.values(userStats.weapons.secondary)) {
+            timesHitLeg += gunStats.shots.hits.leg;
+        }
+
+        return {
+            background: "#1EFFBC",
+            darkBackground: false,
+            title: "🦵",
+            description: `Not a headshot deamon, nor a bodyshot bandit but a ✨ leg loser ✨? Anyways, you have hit someones leg ${timesHitLeg} times`
+        }
+    }
 </script>
 
 <div class="cards-container">
@@ -166,6 +183,8 @@
                 <Card {...card} />
             {/each}
             <Card background="#fff" darkBackground={false} title="😭" description={"That's all the silly stats I could come up with.\nShare a few screenshots in the vail discord if you liked this :)\n\nPing @429ratelimited if you can come up with more card ideas"} />
+        {:catch error}
+            <Card background="#F00" darkBackground={false} title="💥" description={`Uh oh, seems like something broke and you are the one to blame.\nError: ${JSON.stringify(error.data)}`} />
         {/await}
     {/if}
 </div>
