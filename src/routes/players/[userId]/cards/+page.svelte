@@ -2,7 +2,7 @@
 	import Card from "$lib/elements/Card.svelte";
     import { browser } from "$app/environment";
     export let data;
-    import { getUserInfo, getUserStats, getUserRankings } from "$lib/api";
+    import { getUserInfo, getUserStats, getUserRankings, getUserCount } from "$lib/api";
     import type { UserStats, UserInfo } from "$lib/api/types";
 
     type CardProps = {
@@ -36,12 +36,14 @@
         let getUserInfoPromise = getUserInfo(data.userId);
         let getUserStatsPromise = getUserStats(data.userId);
         let getUserRankingsPromise = getUserRankings(data.userId);
+        let getUserCountPromise = getUserCount();
 
-        await Promise.allSettled([getUserInfoPromise, getUserStatsPromise, getUserRankingsPromise]);
+        await Promise.allSettled([getUserInfoPromise, getUserStatsPromise, getUserRankingsPromise, getUserCountPromise]);
         
         let userInfo = await getUserInfoPromise;
         let userStats = await getUserStatsPromise;
         let userRankings = await getUserRankingsPromise;
+        let userCount = await getUserCountPromise;
 
         let wipCards: CardProps[] = [];
 
@@ -54,6 +56,7 @@
         wipCards.push(generatePlaytimeCard(userStats));
         wipCards.push(generateKillsPerHourCard(userStats));
         wipCards.push(generateLegHitsCard(userStats));
+        wipCards.push(generateKillRankingCard(userRankings, userCount));
 
         return wipCards 
             .map(value => ({ value, sort: Math.random() }))
@@ -170,6 +173,16 @@
             title: "🦵",
             description: `Not a headshot deamon, nor a bodyshot bandit but a ✨ leg loser ✨? Anyways, you have hit someones leg ${timesHitLeg} times`
         }
+    }
+    function generateKillRankingCard(userRanking: UserStats, userCount: number) {
+        let topKillsRatio = userRanking.total.kills_and_deaths.kills.total / userCount;
+        let roundedTopKillsPercent = Math.round(topKillsRatio * 10000) / 100;
+        return {
+            background: "#FFA987",
+            darkBackground: false,
+            title: "📈",
+            description: `You are #${userRanking.total.kills_and_deaths.kills.total} on the leaderboard for kills in VAIL. This means you have more kills than ${userCount - userRanking.total.kills_and_deaths.kills.total} vail users (you are in the top ${roundedTopKillsPercent}% of players)`
+        };
     }
 </script>
 
