@@ -10,7 +10,7 @@
 <div>
     <h1>Kanto</h1>
     <h2>Kills</h2>
-    <p>Kills: {data.meleeStats.kanto.kills.total} ({data.meleeStats.kanto.kills.headshots} of them where headshots)</p>
+    <p>Kills: {data.meleeStats.kanto.kills.total} ({data.meleeStats.kanto.kills.headshots} of them were headshots)</p>
     <p>Gold progress:</p>
     <progress max={1} value={data.meleeStats.kanto.kills.headshots / goldRequiredHeadshots} />
     <h2>Throws</h2>

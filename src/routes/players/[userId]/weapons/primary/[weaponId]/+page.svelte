@@ -24,7 +24,7 @@
     <div class="stats-container">
         <p>Shots fired: {data.weaponStats.shots.total}</p>
         <p>Headshots: {data.weaponStats.shots.hits.head}</p>
-        <p>Kills: {data.weaponStats.kills.total} ({data.weaponStats.kills.headshots} of them where headshots)</p>
+        <p>Kills: {data.weaponStats.kills.total} ({data.weaponStats.kills.headshots} of them were headshots)</p>
         <p>Gold progress:</p>
         <progress max={1} value={data.weaponStats.kills.headshots / goldRequiredHeadshots} />
     </div>
