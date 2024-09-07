@@ -104,28 +104,23 @@
     }
     function generateHeadshotGunCard(userStats: UserStats): CardProps {
         let allGuns = [
-            ...(Object.entries(userStats.weapons.primary).map((data) => {return {name: data[0], gun: data[1]}})),
-            ...(Object.entries(userStats.weapons.secondary).map((data) => {return {name: data[0], gun: data[1]}})),
+            ...(Object.entries(userStats.weapons.primary).map((data) => { return { name: data[0], gun: data[1] }; })),
+            ...(Object.entries(userStats.weapons.secondary).map((data) => { return { name: data[0], gun: data[1] }; })),
         ];
 
         let sortedGunsByHeadshotKillAccuracy = allGuns.sort((gunOne, gunTwo) => {
-            let gunOneHsRatio = gunOne.gun.kills.headshots / gunOne.gun.kills.total;
-            let gunTwoHsRatio = gunTwo.gun.kills.headshots / gunTwo.gun.kills.total;
+            let gunOneHsRatio = gunOne.gun.kills.total > 0 ? gunOne.gun.kills.headshots / gunOne.gun.kills.total : 0;
+            let gunTwoHsRatio = gunTwo.gun.kills.total > 0 ? gunTwo.gun.kills.headshots / gunTwo.gun.kills.total : 0;
 
-            if (Number.isNaN(gunOneHsRatio)) {
-                gunOneHsRatio = 0;
-            }
-            if (Number.isNaN(gunTwoHsRatio)) {
-                gunTwoHsRatio = 0;
-            }
-
-            return gunOneHsRatio < gunTwoHsRatio;
+            return gunTwoHsRatio - gunOneHsRatio; // Sort descending by headshot ratio
         });
+
         let bestHeadshotGun = sortedGunsByHeadshotKillAccuracy[0];
-        let emoji = "🏌️"
+        let emoji = "🏌️";
+        
         // For headshotters show 🎯
         let headshotRatio = bestHeadshotGun.gun.kills.headshots / bestHeadshotGun.gun.kills.total;
-        if (headshotRatio > .5) {
+        if (headshotRatio > 0.5) {
             emoji = "🎯";
         }
 
@@ -133,9 +128,10 @@
             background: "#87BBA2",
             darkBackground: false,
             title: emoji,
-            description: `You have the best headshot ratio on ${bestHeadshotGun.name} with a ${Math.floor(headshotRatio*100)}% headshot kill chance`
+            description: `You have the best headshot ratio on ${bestHeadshotGun.name} with a ${Math.floor(headshotRatio * 100)}% headshot kill chance`
         };
     }
+
     function generatePlaytimeCard(userStats: UserStats): CardProps {
         let timePlayedSeconds = userStats.total.time_played_seconds;
         let hoursPlayed = timePlayedSeconds / 60 / 60;
@@ -148,16 +144,20 @@
             description: `You have spent ${timePlayedSeconds} seconds inside vail pubs. In human terms: ${formatTime(timePlayedSeconds)}. \n\nIf you would have spent that time working a US federal minimum wage job, you would have earned ${Math.floor(hoursPlayed * minimumWage)}$ before taxes\n\nYikes.`
         };
     }
-
     function generateKillsPerHourCard(userStats: UserStats): CardProps {
-        let killsPerHour =  userStats.total.kills_and_deaths.kills.total / (userStats.total.time_played_seconds / 60 / 60);
-        
+        let killsPerHour = userStats.total.time_played_seconds > 0 
+            ? userStats.total.kills_and_deaths.kills.total / (userStats.total.time_played_seconds / 60 / 60) 
+            : 0;
+
         let gamemodeToKillsPerHour = Object.entries(userStats.gamemodes).map((params) => {
             let [name, data] = params;
-            return {name, kills_per_hour: data.kills_and_deaths.kills / (data.time_played_seconds / 60 / 60)}
-        }).sort((a, b) => a.kills_per_hour < b.kills_per_hour);
+            let killsPerHour = data.time_played_seconds > 0 
+                ? data.kills_and_deaths.kills / (data.time_played_seconds / 60 / 60) 
+                : 0;
+            return { name, kills_per_hour: killsPerHour };
+        }).sort((a, b) => b.kills_per_hour - a.kills_per_hour);
 
-        let bestGamemode = gamemodeToKillsPerHour[0];
+        let bestGamemode = gamemodeToKillsPerHour.length > 0 ? gamemodeToKillsPerHour[0] : {name: "N/A", kills_per_hour: 0};
 
         return {
             background: "#9883E5",
@@ -166,7 +166,8 @@
             description: `You average ${Math.floor(killsPerHour)} kills/hour.\nYour best gamemode is ${bestGamemode.name.replace("_", " ")} with an average of ${Math.floor(bestGamemode.kills_per_hour)} kills/hour`
         };
     }
-    function generateLegHitsCard(userStats: UserStats): CardProps {
+
+   function generateLegHitsCard(userStats: UserStats): CardProps {
         let timesHitLeg = 0;
         for (let gunStats of Object.values(userStats.weapons.primary)) {
             timesHitLeg += gunStats.shots.hits.leg;
