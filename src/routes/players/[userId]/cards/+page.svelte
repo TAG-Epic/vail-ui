@@ -207,7 +207,7 @@
     <Card title="👀" description={"Lets take a look at your stats, shall we?\n(swipe down)"} background="#0FF" darkBackground={false} />
     {#if browser}
         {#await generateCards()}
-            <Card title="⏳" description={":( be patient, we are still fetching your stats"} background="#F00" darkBackground={false}/>
+            <Card title="⏳" description={"stop being so fast, we are still fetching your stats.\nThis card will be replaced once the stats have loaded"} background="#F00" darkBackground={false}/>
         {:then cards}
             {#each cards as card}
                 <Card {...card} />
