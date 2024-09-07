@@ -57,6 +57,7 @@
         wipCards.push(generateKillsPerHourCard(userStats));
         wipCards.push(generateLegHitsCard(userStats));
         wipCards.push(generateKillRankingCard(userRankings, userCount));
+        wipCards.push(generateLongKnifeThrowCard(userStats));
 
         return wipCards 
             .map(value => ({ value, sort: Math.random() }))
@@ -165,7 +166,7 @@
             description: `You average ${Math.floor(killsPerHour)} kills/hour.\nYour best gamemode is ${bestGamemode.name.replace("_", " ")} with an average of ${Math.floor(bestGamemode.kills_per_hour)} kills/hour`
         };
     }
-    function generateLegHitsCard(userStats: UserStats) {
+    function generateLegHitsCard(userStats: UserStats): CardProps {
         let timesHitLeg = 0;
         for (let gunStats of Object.values(userStats.weapons.primary)) {
             timesHitLeg += gunStats.shots.hits.leg;
@@ -181,7 +182,7 @@
             description: `Not a headshot demon, nor a bodyshot bandit but a ✨ legshot loser ✨? Anyways, you have hit someones leg ${timesHitLeg} times`
         }
     }
-    function generateKillRankingCard(userRanking: UserStats, userCount: number) {
+    function generateKillRankingCard(userRanking: UserStats, userCount: number): CardProps {
         let topKillsRatio = userRanking.total.kills_and_deaths.kills.total / userCount;
         let roundedTopKillsPercent = Math.round(topKillsRatio * 10000) / 100;
         return {
@@ -189,6 +190,14 @@
             darkBackground: false,
             title: "📈",
             description: `You are #${userRanking.total.kills_and_deaths.kills.total} on the leaderboard for kills in VAIL. This means you have more kills than ${userCount - userRanking.total.kills_and_deaths.kills.total} vail users (you are in the top ${roundedTopKillsPercent}% of players)`
+        };
+    }
+    function generateLongKnifeThrowCard(userStats: UserStats): CardProps {
+        return {
+            background: "#BC96E6",
+            darkBackground: false,
+            title: "🔪",
+            description: `You have thrown a knife ${userStats.weapons.melee.total.kills.throwing.longest_throw/100}m and killed someone`
         };
     }
 </script>
