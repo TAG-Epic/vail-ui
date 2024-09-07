@@ -111,7 +111,14 @@
             let gunOneHsRatio = gunOne.gun.kills.headshots / gunOne.gun.kills.total;
             let gunTwoHsRatio = gunTwo.gun.kills.headshots / gunTwo.gun.kills.total;
 
-            return gunOneHsRatio > gunTwoHsRatio;
+            if (Number.isNaN(gunOneHsRatio)) {
+                gunOneHsRatio = 0;
+            }
+            if (Number.isNaN(gunTwoHsRatio)) {
+                gunTwoHsRatio = 0;
+            }
+
+            return gunOneHsRatio < gunTwoHsRatio;
         });
         let bestHeadshotGun = sortedGunsByHeadshotKillAccuracy[0];
         let emoji = "🏌️"
@@ -171,7 +178,7 @@
             background: "#1EFFBC",
             darkBackground: false,
             title: "🦵",
-            description: `Not a headshot deamon, nor a bodyshot bandit but a ✨ leg loser ✨? Anyways, you have hit someones leg ${timesHitLeg} times`
+            description: `Not a headshot demon, nor a bodyshot bandit but a ✨ legshot loser ✨? Anyways, you have hit someones leg ${timesHitLeg} times`
         }
     }
     function generateKillRankingCard(userRanking: UserStats, userCount: number) {
