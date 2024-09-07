@@ -116,7 +116,7 @@
         </div>
         <h3>Melee</h3>
         <div class="weapons-container button-link-container">
-            <a class="weapons-link link-button" href={`/players/${data.userInfo.id}/weapons/melee/kanto`}>Kanto</a>
+            <a class="weapons-link link-button" href={`/players/${data.userInfo.id}/weapons/melee/kanto`}>kanto</a>
         </div>
     </section>
     <section class="maps-section">
