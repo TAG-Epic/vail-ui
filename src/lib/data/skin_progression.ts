@@ -108,5 +108,6 @@ export const WEAPON_ID_TO_PROGRESSION = {
     "mk23": MAX_TO_PROGRESSION[400],
     "pm9": MAX_TO_PROGRESSION[400],
     "deagle": MAX_TO_PROGRESSION[400],
-    "kanto": MAX_TO_PROGRESSION[1000]
+    "kanto": MAX_TO_PROGRESSION[1000],
+    "nxshammer": MAX_TO_PROGRESSION[600]
 };
