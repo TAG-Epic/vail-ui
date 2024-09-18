@@ -205,15 +205,15 @@
     }
 	function generateGoldsCard(userStats: UserStats): CardProps {
 		let weapons = [
-			...Object.items(userStats.weapons.primary),
-			...Object.items(userStats.weapons.secondary),
-			{kanto: userStats.weapons.melee.kanto}
+			...Object.entries(userStats.weapons.primary),
+			...Object.entries(userStats.weapons.secondary),
+			["kanto", userStats.weapons.melee.kanto]
 		];
 		let totalWeaponCount = weapons.length;
 		let goldWeaponCount = 0;
 
 		for (let [weaponId, weapon] of weapons) {
-			let skinProgression = WEAPON_ID_TO_PROGRESSION[data.weaponId];
+			let skinProgression = WEAPON_ID_TO_PROGRESSION[weaponId];
 			let requiredHeadshots = Object.keys(skinProgression);
 			let goldRequiredHeadshots = requiredHeadshots[requiredHeadshots.length - 1];
 
@@ -236,7 +236,7 @@
 			background: "#84ACCE",
 			darkBackground: false,
 			title: "🌿",
-			description: `The blue background of this card signifies the bright blue sky you will never see\nThe green in the title singifies the grass you will never touch because you stand inside all day playing VAIL grinding skins.\n\nHow do you have ${goldWeaponSkin} weapon skins, yet no life?\nLike that's ${Math.floor(goldPercent * 100) / 100}% maxed out gun progressions. Stop it, get some help.`
+			description: `The blue background of this card signifies the bright blue sky you will never see\nThe green in the title singifies the grass you will never touch because you stand inside all day playing VAIL grinding skins.\n\nHow do you have ${goldWeaponCount} weapon skins, yet no life?\nLike that's ${Math.floor(goldPercent * 100) / 100}% maxed out gun progressions. Stop it, get some help.`
 		};
 	}
 </script>
@@ -252,6 +252,7 @@
             {/each}
             <Card background="#fff" darkBackground={false} title="😭" description={"That's all the silly stats I could come up with.\nShare a few screenshots in the vail discord if you liked this :)\n\nPing @429ratelimited if you can come up with more card ideas"} />
         {:catch error}
+            {@debug error}
             <Card background="#F00" darkBackground={false} title="💥" description={`Uh oh, seems like something broke and you are the one to blame.\nError: ${JSON.stringify(error.data)}`} />
         {/await}
     {/if}
