@@ -59,6 +59,7 @@
         wipCards.push(generateLegHitsCard(userStats));
         wipCards.push(generateKillRankingCard(userRankings, userCount));
         wipCards.push(generateLongKnifeThrowCard(userStats));
+		wipCards.push(generateGoldsCard(userStats));
 
         return wipCards 
             .map(value => ({ value, sort: Math.random() }))
