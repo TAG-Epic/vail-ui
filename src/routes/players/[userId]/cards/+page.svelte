@@ -236,7 +236,7 @@
 			background: "#84ACCE",
 			darkBackground: false,
 			title: "🌿",
-			description: `The blue background of this card signifies the bright blue sky you will never see\nThe green in the title singifies the grass you will never touch because you stand inside all day playing VAIL grinding skins.\n\nHow do you have ${goldWeaponCount} weapon skins, yet no life?\nLike that's ${Math.floor(goldPercent * 100) / 100}% maxed out gun progressions. Stop it, get some help.`
+			description: `The blue background of this card signifies the bright blue sky you will never see\nThe green in the title singifies the grass you will never touch because you stand inside all day playing VAIL grinding skins.\n\nHow do you have ${goldWeaponCount} gold skins, yet no life?\nLike that's ${Math.floor(goldPercent * 100) / 100}% maxed out gun progressions. Stop it, get some help.`
 		};
 	}
 </script>
