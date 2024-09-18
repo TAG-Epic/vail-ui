@@ -4,6 +4,7 @@
     export let data;
     import { getUserInfo, getUserStats, getUserRankings, getUserCount } from "$lib/api";
     import type { UserStats, UserInfo } from "$lib/api/types";
+    import { WEAPON_ID_TO_PROGRESSION } from "$lib/data/skin_progression";
 
     type CardProps = {
         background: string;
@@ -201,6 +202,42 @@
             description: `You have thrown a knife ${userStats.weapons.melee.total.kills.throwing.longest_throw/100}m and killed someone`
         };
     }
+	function generateGoldsCard(userStats: UserStats): CardProps {
+		let weapons = [
+			...Object.items(userStats.weapons.primary),
+			...Object.items(userStats.weapons.secondary),
+			{kanto: userStats.weapons.melee.kanto}
+		];
+		let totalWeaponCount = weapons.length;
+		let goldWeaponCount = 0;
+
+		for (let [weaponId, weapon] of weapons) {
+			let skinProgression = WEAPON_ID_TO_PROGRESSION[data.weaponId];
+			let requiredHeadshots = Object.keys(skinProgression);
+			let goldRequiredHeadshots = requiredHeadshots[requiredHeadshots.length - 1];
+
+			if (weapon.kills.headshots >= goldRequiredHeadshots) {
+				goldWeaponCount++;
+			}
+			
+		}
+
+		if (goldWeaponCount === 0) {
+			return {
+				background: "#5B7553",
+				darkBackground: false,
+				title: "🌿",
+				description: "Well at least one of us has touched some grass recently. Now get back to VAIL and max out some gun progressions"
+			};
+		}
+		let goldPercent = (goldWeaponCount / totalWeaponCount) * 100;
+		return {
+			background: "#84ACCE",
+			darkBackground: false,
+			title: "🌿",
+			description: `The blue background of this card signifies the bright blue sky you will never see\nThe green in the title singifies the grass you will never touch because you stand inside all day playing VAIL grinding skins.\n\nHow do you have ${goldWeaponSkin} weapon skins, yet no life?\nLike that's ${Math.floor(goldPercent * 100) / 100}`% maxed out gun progressions. Stop it, get some help.`
+		};
+	}
 </script>
 
 <div class="cards-container">
