@@ -2,8 +2,8 @@
 	import Card from "$lib/elements/Card.svelte";
     import { browser } from "$app/environment";
     export let data;
-    import { getUserInfo, getUserStats, getUserRankings, getUserCount } from "$lib/api";
-    import type { UserStats, UserInfo } from "$lib/api/types";
+    import { getUserInfo, getUserStats, getUserRankings, getUserCount, getUserUsernameHistory, getUserAvatarHistory } from "$lib/api";
+    import type { UserStats, UserInfo, UsernameHistoryEntry, AvatarHistoryEntry } from "$lib/api/types";
     import { WEAPON_ID_TO_PROGRESSION } from "$lib/data/skin_progression";
 
     type CardProps = {
@@ -38,13 +38,17 @@
         let getUserStatsPromise = getUserStats(data.userId);
         let getUserRankingsPromise = getUserRankings(data.userId);
         let getUserCountPromise = getUserCount();
+		let getUserUsernameHistoryPromise = getUserUsernameHistory(data.userId);
+		let getUserAvatarHistoryPromise = getUserAvatarHistory(data.userId);
 
-        await Promise.allSettled([getUserInfoPromise, getUserStatsPromise, getUserRankingsPromise, getUserCountPromise]);
+        await Promise.allSettled([getUserInfoPromise, getUserStatsPromise, getUserRankingsPromise, getUserCountPromise, getUserUsernameHistoryPromise, getUserAvatarHistoryPromise]);
         
         let userInfo = await getUserInfoPromise;
         let userStats = await getUserStatsPromise;
         let userRankings = await getUserRankingsPromise;
         let userCount = await getUserCountPromise;
+		let usernameHistory = await getUserUsernameHistoryPromise;
+		let avatarHistory = await getUserAvatarHistoryPromise;
 
         let wipCards: CardProps[] = [];
 
@@ -60,6 +64,11 @@
         wipCards.push(generateKillRankingCard(userRankings, userCount));
         wipCards.push(generateLongKnifeThrowCard(userStats));
 		wipCards.push(generateGoldsCard(userStats));
+
+		let fancyAssCard = generateFancyAssCard(usernameHistory, avatarHistory);
+		if (fancyAssCard !== null) {
+			wipCards.push(fancyAssCard);
+		}
 
         return wipCards 
             .map(value => ({ value, sort: Math.random() }))
@@ -238,6 +247,33 @@
 			title: "🌿",
 			description: `The blue background of this card signifies the bright blue sky you will never see\nThe green in the title singifies the grass you will never touch because you stand inside all day playing VAIL grinding skins.\n\nHow do you have ${goldWeaponCount} gold skins, yet no life?\nLike that's ${Math.floor(goldPercent * 100) / 100}% maxed out gun progressions. Stop it, get some help.`
 		};
+	}
+	function generateFancyAssCard(usernameHistory: UsernameHistoryEntry[], avatarHistory: AvatarHistoryEntry[]): CardProps | null {
+		if (usernameHistory.length > 3 && avatarHistory.length > 3) {
+			return {
+				background: "#D64045",
+				darkBackground: false,
+				title: "👔",
+				description: `What a fancy ass you are, constantly changing your avatar and constantly changing your username confusing literally everyone. ${usernameHistory.length} usernames and ${avatarHistory.length} avatars is too much, stop it.`
+			}
+		}
+		if (usernameHistory.length > 3) {
+			return {
+				background: "#D64045",
+				darkBackground: false,
+				title: "👔",
+				description: `What a fancy ass you are, constantly changing your username confusing literally everyone. ${usernameHistory.length} usernames is too much, stop it.`
+			}
+		}
+		if (avatarHistory.length > 3) {
+			return {
+				background: "#D64045",
+				darkBackground: false,
+				title: "👔",
+				description: `What a fancy ass you are, constantly changing your avatar to keep looking fancy. ${avatarHistory.length} is a lot, but you rock them all. Hell yeah`
+			}
+		}
+		return null;
 	}
 </script>
 
