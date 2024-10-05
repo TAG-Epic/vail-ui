@@ -85,7 +85,7 @@
 </style>
 <main>
     <section class="header-section">
-        <img class="avatar" src={data.userInfo.avatar_url} alt="" />
+        <a href={`/players/${data.userInfo.id}/avatar-history`}><img class="avatar" src={data.userInfo.avatar_url} alt="" /></a>
         <div class="username-and-level">
             <a class="username" href={`/players/${data.userInfo.id}/username-history`}>{data.userInfo.display_name} <a class="hidden-link" href={`/players/${data.userInfo.id}/cards`}>✨</a></a>
             <a class="level-progress" href={`/players/${data.userInfo.id}/progression`}>

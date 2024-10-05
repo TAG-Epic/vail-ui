@@ -68,3 +68,7 @@ export type UsernameHistoryEntry = {
 	display_name: string;
 	discovered_at: string;
 };
+export type AvatarHistoryEntry = {
+	avatar_url: string;
+	discovered_at: string;
+};

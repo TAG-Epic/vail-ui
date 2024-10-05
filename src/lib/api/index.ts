@@ -1,4 +1,4 @@
-import type { UserInfo, NoPagingPager, UserStats, UsernameHistoryEntry } from "./types";
+import type { UserInfo, NoPagingPager, UserStats, UsernameHistoryEntry, AvatarHistoryEntry } from "./types";
 import { API_BASE } from "./stores";
 import { APIError } from "./errors";
 import { get } from "svelte/store";
@@ -56,4 +56,9 @@ export async function getUserUsernameHistory(userId: string): Promise<UsernameHi
 	let response = await fetch(`${getApiBase()}/api/v3/users/${encodeURIComponent(userId)}/display-name/history`);
 	await errorForStatus(response);
     return (await response.json()).items as UsernameHistoryEntry[];
+}
+export async function getUserAvatarHistory(userId: string): Promise<AvatarHistoryEntry[]> {
+	let response = await fetch(`${getApiBase()}/api/v3/users/${encodeURIComponent(userId)}/avatar/history`);
+	await errorForStatus(response);
+    return (await response.json()).items as AvatarHistoryEntry[];
 }
