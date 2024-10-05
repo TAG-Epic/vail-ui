@@ -29,6 +29,7 @@
         margin: 0;
         padding: 0;
         font-size: 2rem;
+		text-decoration: none;
     }
     .level-progress {
         display: flex;
@@ -86,7 +87,7 @@
     <section class="header-section">
         <img class="avatar" src={data.userInfo.avatar_url} alt="" />
         <div class="username-and-level">
-            <h1 class="username">{data.userInfo.display_name} <a class="hidden-link" href={`/players/${data.userInfo.id}/cards`}>✨</a></h1>
+            <a class="username" href={`/players/${data.userInfo.id}/username-history`}>{data.userInfo.display_name} <a class="hidden-link" href={`/players/${data.userInfo.id}/cards`}>✨</a></a>
             <a class="level-progress" href={`/players/${data.userInfo.id}/progression`}>
                 <span>0</span>
                 <progress max={1} value={data.userStats.progression.xp / LEVEL_PROGRESSION[LEVEL_PROGRESSION.length - 1]} />
@@ -125,6 +126,7 @@
             {#each Object.keys(data.userStats.maps) as mapId}
                 <a class="map-link link-button" href={`/players/${data.userInfo.id}/maps/${mapId}`}>{mapId}</a>
             {/each}
+			<a class="map-link link-button" href={`javascript:location.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'`}>flora</a>
         </div>
     </section>
     <section class="gamemodes-section">

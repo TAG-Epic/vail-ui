@@ -1,4 +1,4 @@
-import type { UserInfo, NoPagingPager, UserStats } from "./types";
+import type { UserInfo, NoPagingPager, UserStats, UsernameHistoryEntry } from "./types";
 import { API_BASE } from "./stores";
 import { APIError } from "./errors";
 import { get } from "svelte/store";
@@ -51,4 +51,9 @@ export async function getUserRankings(userId: string): Promise<UserStats> { // O
     await errorForStatus(response);
 
     return (await response.json()) as UserStats;
+}
+export async function getUserUsernameHistory(userId: string): Promise<UsernameHistoryEntry[]> {
+	let response = await fetch(`${getApiBase()}/api/v3/users/${encodeURIComponent(userId)}/display-name/history`);
+	await errorForStatus(response);
+    return (await response.json()).items as UsernameHistoryEntry[];
 }

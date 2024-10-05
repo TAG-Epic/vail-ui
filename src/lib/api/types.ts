@@ -64,3 +64,7 @@ export type UserStats = {
     // TODO: Progression
     // TODO: Total
 };
+export type UsernameHistoryEntry = {
+	display_name: string;
+	discovered_at: string;
+};
