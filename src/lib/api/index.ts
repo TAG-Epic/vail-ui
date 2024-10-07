@@ -1,4 +1,4 @@
-import type { UserInfo, NoPagingPager, UserStats, UsernameHistoryEntry, AvatarHistoryEntry } from "./types";
+import type { UserInfo, NoPagingPager, UserStats, UsernameHistoryEntry, AvatarHistoryEntry, TimePagingFilter, TimeseriesUserStats } from "./types";
 import { API_BASE } from "./stores";
 import { APIError } from "./errors";
 import { get } from "svelte/store";
@@ -61,4 +61,16 @@ export async function getUserAvatarHistory(userId: string): Promise<AvatarHistor
 	let response = await fetch(`${getApiBase()}/api/v3/users/${encodeURIComponent(userId)}/avatar/history`);
 	await errorForStatus(response);
     return (await response.json()).items as AvatarHistoryEntry[];
+}
+export async function getUserStatHistory(userId: string, paging: TimePagingFilter): Promise<TimeseriesUserStats[]> {
+	let params = new URLSearchParams();
+	if (paging.before !== undefined) {
+		params.set("before", paging.before);
+	}
+	if (paging.after !== undefined) {
+		params.set("after", paging.after);
+	}
+	let response = await fetch(`${getApiBase()}/api/v3/users/${encodeURIComponent(userId)}/stats/history?${params.toString()}`);
+	await errorForStatus(response);
+    return (await response.json()).items as TimeseriesUserStats[];
 }

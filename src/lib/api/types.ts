@@ -72,3 +72,11 @@ export type AvatarHistoryEntry = {
 	avatar_url: string;
 	discovered_at: string;
 };
+export type TimePagingFilter = {
+	before?: number;
+	after?: number;
+}
+export type TimeseriesUserStats = {
+	scraped_at: number;
+	stats: UserStats;
+};

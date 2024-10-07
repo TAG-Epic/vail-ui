@@ -126,7 +126,8 @@
             {#each Object.keys(data.userStats.maps) as mapId}
                 <a class="map-link link-button" href={`/players/${data.userInfo.id}/maps/${mapId}`}>{mapId}</a>
             {/each}
-			<a class="map-link link-button" href={`javascript:location.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'`}>flora</a>
+			<a class="map-link link-button" href={`javascript:location.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'`}>frio</a>
+			<a class="map-link link-button" href={`/players/${data.userInfo.id}/graphs`}>flora</a>
         </div>
     </section>
     <section class="gamemodes-section">
