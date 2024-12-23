@@ -1,6 +1,7 @@
 <script lang="ts">
     import NavBar from "$lib/elements/NavBar.svelte";
     import "$lib/app.css";
+	import Notice from "$lib/elements/Notice.svelte";
 </script>
 
 <style>
@@ -16,3 +17,4 @@
     <NavBar />
     <slot />
 </div>
+<Notice />
