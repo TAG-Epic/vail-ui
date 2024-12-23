@@ -18,7 +18,7 @@
 		This is due to AEXLAB ignoring it's community (<i>cough cough competitive, cough cough wassies</i>) and making maintaining this site increasingly and excessively difficult.
 	</p>
 	<p>
-		Fun fact: this site currently works by faking a VAIL player and bypassing hardware bans. Thanks AEXLAB.
+		Fun fact: this site currently works by faking a VAIL player and bypassing the hardware ban system (we are not hardware banned). Thanks AEXLAB.
 		We used to do simpler ways previously however AEXLAB blocked us from using these.
 	</p>
 
